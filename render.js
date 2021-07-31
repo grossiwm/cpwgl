@@ -5,14 +5,13 @@ function render() {
   const canvas = document.querySelector('#glcanvas');
   const gl = canvas.getContext('webgl');
 
-  // If we don't have a GL context, give up now
 
   if (!gl) {
     alert('Unable to initialize WebGL. Your browser or machine may not support it.');
     return;
   }
 
-  // Vertex shader program
+  // Vertex shader 
 
   const vsSource = `
     attribute vec4 aVertexPosition;
@@ -29,7 +28,7 @@ function render() {
     }
   `;
 
-  // Fragment shader program
+  // Fragment shader 
 
   const fsSource = `
     varying lowp vec4 vColor;
@@ -86,21 +85,16 @@ function initBuffers(gl) {
 
   // Now create an array of positions for the square.
 
-  const positions = [
-     1.0,  1.0,
-    -1.0,  1.0,
-     1.0, -1.0,
-    -1.0, -1.0,
-  ];
 
   // Now pass the list of positions into WebGL to build the
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
-  
-  const inters = obtemIntercoes(0,10,2).flat();
-  console.log(inters)
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
+  let inters = obtemIntercoes(0,10,1)
+
+  
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(inters), gl.STATIC_DRAW);
+  console.log(inters)
   // Now set up the colors for the vertices
 
   var colors = [
@@ -140,7 +134,7 @@ function drawScene(gl, programInfo, buffers) {
   // and we only want to see objects between 0.1 units
   // and 100 units away from the camera.
 
-  const fieldOfView = 45 * Math.PI / 180;   // in radians
+  const fieldOfView = 120 * Math.PI / 180;   // in radians
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 0.1;
   const zFar = 100.0;

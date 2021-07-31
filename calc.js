@@ -8,19 +8,15 @@ const obtemCir = (centroX, centroY, raio) => {
 } 
 
 const obtemIntercoes = (pontoInicial, pontoFinal, passo) => {
+    const meio = (pontoFinal-pontoInicial)/2;
+    const eqCirc = obtemCir(meio, meio, meio);
 
-    const eqCirc = obtemCir(5, 5, 5);
-
-    // console.log(`circunferência: ${eqCirc.toString()}`)
-
-    let cont = 0;
-    const intercs = [];
-    for (i=pontoInicial+passo; i<= pontoFinal; i+=2) {
+    let intercs = [];
+    for (i=pontoInicial+passo; i<= pontoFinal; i+=passo) {
         let par = [];
         par.push([i,0]);
         par.push([0,i]);
         let eqReta = new algebra.Equation(algebra.parse('y'), algebra.parse(`${obtemCoefReta(par)}*x + ${par[1][1]}`));
-        // console.log(`reta ${++cont}: ${eqReta.toString()}`);
 
         let novaEqYStr = eqCirc.toString().replaceAll('x', "(" + eqReta.solveFor('x').toString() + ")");
 
@@ -37,6 +33,47 @@ const obtemIntercoes = (pontoInicial, pontoFinal, passo) => {
         })
     }
     
+    const supesq = [];
+    const supdir = [];
+    const infesq = [];
+    const infdir = [];
+    for (i=0; i < intercs.length; i++) {
+  
+      let ponto = intercs[i];
+      let x = ponto[0]-meio;
+      let y = ponto[1]-meio;
+  
+      if (x<0 && y>0) {
+        supesq.push(ponto);
+      }
+  
+      if (x>0 && y>0) {
+        supdir.push(ponto);
+      }
+  
+      if (x<0 && y<0) {
+        infesq.push(ponto);
+      }
+  
+      if (x>0 && y<0) {
+        infdir.push(ponto);
+      }
+  
+  
+    }
+  
+    pontos = []
+  
+    pontos.push(supdir);
+    pontos.push(infdir);
+    pontos.push(infesq);
+    pontos.push(supesq);
+  
+    pontos.forEach((e) => e.sort((a, b) => a[0] - b[0]));
+    console.log(pontos.flat().reverse());
+  
+    intercs = pontos.flat().reverse().flat();
+
     return intercs;
 }
 
