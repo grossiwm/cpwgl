@@ -90,8 +90,7 @@ function initBuffers(gl) {
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
 
-  let inters = obtemPontos(1,2).flat().flat();
-  console.log(obtemPontos(1,2))
+  let inters = obtemPontos(1,4).flat().flat();
 
   
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(inters), gl.STATIC_DRAW);
@@ -217,7 +216,7 @@ function drawScene(gl, programInfo, buffers) {
   {
     const offset = 0;
     const vertexCount = 4;
-    gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+    gl.drawArrays(gl.LINE_STRIP, offset, vertexCount);
   }
 }
 

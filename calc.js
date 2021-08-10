@@ -39,7 +39,7 @@ const obtemPontos = (precisao, limite) => {
         let paresOpostos=[[pontoA, pontoD], [pontoB, pontoC]];
         
         paresOpostos.forEach((par)=>{
-          if (resolveSistema(par[0], limite)*resolveSistema(par[1], limite) < 0) {
+          if ((resolveSistema(par[0], limite)*resolveSistema(par[1], limite)) < 0) {
             let coefReta = obtemCoefReta(par[0], par[1]);
             let b = obtemB(par, coefReta);
             let eqReta = new algebra.Equation(algebra.parse('y'), algebra.parse(`${coefReta}x + (${b})`));
@@ -49,13 +49,14 @@ const obtemPontos = (precisao, limite) => {
 
             ys.forEach((e)=>{
               let resp = algebra.parse(eqReta.toString().replaceAll('y', e)).solveFor('x');
-              inters.push([resp.valueOf(), e]);
+              inters.push([resp.valueOf(), e.valueOf()]);
             })
              
           }
         })
       }
   }
-  return inters
+  console.log(inters)
+  return inters;
+
 }
-console.log(obtemPontos(1, 10));
