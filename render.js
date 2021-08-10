@@ -90,11 +90,11 @@ function initBuffers(gl) {
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
 
-  let inters = obtemIntercoes(0,10,1)
+  let inters = obtemPontos(1,2).flat().flat();
+  console.log(obtemPontos(1,2))
 
   
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(inters), gl.STATIC_DRAW);
-  console.log(inters)
   // Now set up the colors for the vertices
 
   var colors = [
