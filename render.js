@@ -5,11 +5,8 @@ const gl = canvas.getContext('experimental-webgl');
 
 /* Step2: Define the geometry and store it in buffer objects */
 
-// var vertices = [-0.5, 0.5, -0.5, -0.5, 0.0, -0.5,1,1, 0.4,0.1];
-
-let vertices = colocaEmOrdem(obtemPontos(1,4)).flat();
-vertices = vertices.map((v)=>v*0.5)
-
+let vertices = colocaEmOrdem(obtemPontos(1,128)).flat();
+// vertices = vertices.map((v)=>v*0.01)
 
 // Create a new buffer object
 let vertex_buffer = gl.createBuffer();

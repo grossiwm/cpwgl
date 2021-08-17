@@ -54,6 +54,12 @@ const obtemPontos = (precisao, limite) => {
         })
       }
   }
+
+  for (i=0; i < inters.length; i++) {
+    ponto = inters[i];
+    ponto[0]=ponto[0]/((limite+limite/12.8)*precisao/2);
+    ponto[1]=ponto[1]/((limite+limite/12.8)*precisao/2);
+  }
   return inters;
 
 }
