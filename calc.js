@@ -43,8 +43,6 @@ const obtemPontos = (precisao, limite) => {
             let coefReta = obtemCoefReta(par[0], par[1]);
             let b = obtemB(par, coefReta);
             let eqReta = new algebra.Equation(algebra.parse('y'), algebra.parse(`${coefReta}x + (${b})`));
-            console.log(eqReta.toString()); 
-
             let ys = algebra.parse(eqCirco.toString().replaceAll('x', '(' + eqReta.solveFor('x').toString() + ')')).solveFor('y');
 
             ys.forEach((e)=>{
@@ -56,7 +54,46 @@ const obtemPontos = (precisao, limite) => {
         })
       }
   }
-  console.log(inters)
   return inters;
 
+}
+
+const colocaEmOrdem = (points) => {
+
+  // Find min max to get center
+  // Sort from top to bottom
+  points.sort((a,b)=>a[1] - b[1]);
+
+  // Get center y
+  const cy = (points[0][1] + points[points.length -1][1]) / 2;
+
+  // Sort from right to left
+  points.sort((a,b)=>b[0] - a[0]);
+
+  // Get center x
+  const cx = (points[0][0] + points[points.length -1][0]) / 2;
+
+  // Center point
+  const center = {x:cx,y:cy};
+
+  // Pre calculate the angles as it will be slow in the sort
+  // As the points are sorted from right to left the first point
+  // is the rightmost
+
+  // Starting angle used to reference other angles
+  var startAng;
+  points.forEach(point => {
+      var ang = Math.atan2(point[1] - center.y,point[0] - center.x);
+      if(!startAng){ startAng = ang }
+      else {
+          if(ang < startAng){  // ensure that all points are clockwise of the start point
+              ang += Math.PI * 2;
+          }
+      }
+      point.angle = ang; // add the angle to the point
+  });
+
+  points.sort((a,b)=> a.angle - b.angle);
+
+  return points.reverse();
 }
